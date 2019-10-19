@@ -6,6 +6,8 @@ import utilities.IConstants;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -15,15 +17,21 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.ArrayList;
 
 public class MainWindow extends JFrame implements Observer, IConstants {
     private boolean done;
     private ImagePanel mainPanel;
+    private JPanel buttonPanel;
     private MapManager manager;
     private Hashtable<JLabel,Point> hashtable;
+    private ArrayList<Point> path;
     private MouseAdapter panelListener;
     private MouseAdapter inNodeListener;
+    private ActionListener bFinished;
+    private ActionListener bGenPath;
     private BufferedImage image;
+    
     public MainWindow(){
         //Frame
         super(WINDOW_NAME);
@@ -34,10 +42,10 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         CreateListeners();
         CreateManager();
         CreateMainPanel();
-        //Button
-
-        //add
+        CreateButtonPanel();
+        
         add(mainPanel);
+        add(buttonPanel);
 
     }
     private void CreateMainPanel(){
@@ -48,6 +56,23 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         loadImage();
         mainPanel.setImage(image.getScaledInstance(WINDOW_WIDTH, WINDOW_HEIGHT, Image.SCALE_DEFAULT));
         mainPanel.addMouseListener(panelListener);
+    }
+    
+    private void CreateButtonPanel() {
+    	//Buttons
+        JButton finished = new JButton("Finish Adding");
+        finished.setSize(15,  4);
+        finished.addActionListener(bFinished);
+        
+        JButton path = new JButton("Get Path");
+        path.setSize(10, 4);
+        path.addActionListener(bGenPath);
+        
+        this.buttonPanel = new JPanel();
+        this.buttonPanel.setSize(20, 10);
+        //this.buttonPanel.
+        this.buttonPanel.add(finished);
+        this.buttonPanel.add(path);
     }
     
     private void loadImage() {
@@ -75,6 +100,23 @@ public class MainWindow extends JFrame implements Observer, IConstants {
                 Point point = hashtable.get((JLabel)e.getSource());
                 manager.addEdge(point);
             }
+        };
+        this.bFinished = new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		panelListener = null;
+        		inNodeListener = new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        manager.setLast(hashtable.get((JLabel)e.getSource()));
+                    }
+                };
+			};
+        };
+        this.bGenPath = new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		//this.path = manager.getPath();
+        		//this.paintPath();
+			};
         };
     }
     private void CreateManager(){
