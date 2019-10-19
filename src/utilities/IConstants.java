@@ -7,5 +7,6 @@ public interface IConstants {
     static int MAINPANEL_HEIGHTRATIO = 3/4;
     static int MAINPANEL_WIDTHRATIO = 1;
     static final String IMAGE_PATH = "src/utilities/ciudad.png";
+    static int NODE_RADIUS = 15;
 
 }
