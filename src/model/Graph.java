@@ -76,6 +76,10 @@ public class Graph<T> {
 		return null;
 	}
 	
+	public T getHome() {
+		return this.nodes.get(0).getContents();
+	}
+	
 	private ArrayList<T> generatePath(ArrayList<T> pArray, GraphNode<T> pNode){
 		if (pNode == null) {
 			return pArray;
