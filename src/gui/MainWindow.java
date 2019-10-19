@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.ArrayList;
 
 public class MainWindow extends JFrame implements Observer, IConstants {
     private boolean done;
@@ -24,6 +25,7 @@ public class MainWindow extends JFrame implements Observer, IConstants {
     private JPanel buttonPanel;
     private MapManager manager;
     private Hashtable<JLabel,Point> hashtable;
+    private ArrayList<Point> path;
     private MouseAdapter panelListener;
     private MouseAdapter inNodeListener;
     private ActionListener bFinished;
@@ -109,7 +111,12 @@ public class MainWindow extends JFrame implements Observer, IConstants {
                 };
 			};
         };
-        
+        this.bGenPath = new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		//this.path = manager.getPath();
+        		//this.paintPath();
+			};
+        };
     }
     private void CreateManager(){
         manager = new MapManager();
