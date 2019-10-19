@@ -44,8 +44,10 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         CreateMainPanel();
         CreateButtonPanel();
         
-        add(mainPanel);
-        add(buttonPanel);
+        add(buttonPanel, BorderLayout.SOUTH);
+        add(mainPanel, BorderLayout.CENTER);
+        setVisible(true);
+        
 
     }
     private void CreateMainPanel(){
@@ -103,19 +105,13 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         };
         this.bFinished = new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		panelListener = null;
-        		inNodeListener = new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        manager.setLast(hashtable.get((JLabel)e.getSource()));
-                    }
-                };
+        		done = true;
 			};
         };
         this.bGenPath = new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		//this.path = manager.getPath();
-        		//this.paintPath();
+//        		this.path = manager.getPath();
+//        		this.paintPath();
 			};
         };
     }
@@ -140,7 +136,7 @@ public class MainWindow extends JFrame implements Observer, IConstants {
 
     public static void main(String[] args) {
         MainWindow main = new MainWindow();
-        main.setVisible(true);
+        
     }
 
 
