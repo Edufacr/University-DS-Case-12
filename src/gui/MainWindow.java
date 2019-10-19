@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class MainWindow extends JFrame implements Observer, IConstants {
     private boolean done;
-    private JPanel mainPanel;
+    private ImagePanel mainPanel;
     private JPanel buttonPanel;
     private MapManager manager;
     private Hashtable<JLabel,Point> hashtable;
@@ -49,11 +49,12 @@ public class MainWindow extends JFrame implements Observer, IConstants {
 
     }
     private void CreateMainPanel(){
-        mainPanel = new JPanel();
+        mainPanel = new ImagePanel();
+        mainPanel.setLayout(null);
         mainPanel.setPreferredSize(new Dimension(WINDOW_WIDTH*MAINPANEL_WIDTHRATIO,WINDOW_HEIGHT*MAINPANEL_HEIGHTRATIO));
+
         loadImage();
-        JLabel imageLabel = new JLabel(new ImageIcon(this.image.getScaledInstance(WINDOW_WIDTH, WINDOW_HEIGHT, Image.SCALE_DEFAULT)));
-        mainPanel.add(imageLabel);
+        mainPanel.setImage(image.getScaledInstance(WINDOW_WIDTH, WINDOW_HEIGHT, Image.SCALE_DEFAULT));
         mainPanel.addMouseListener(panelListener);
     }
     
@@ -86,6 +87,7 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         panelListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                System.out.println("AddNode");
                 int x = e.getX();
                 int y = e.getY();
                 manager.addPoint(x,y);
@@ -94,10 +96,9 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         inNodeListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.print("Estripo");
+                System.out.println("AddEdge");
                 Point point = hashtable.get((JLabel)e.getSource());
                 manager.addEdge(point);
-                System.out.print("Estripo");
             }
         };
         this.bFinished = new ActionListener() {
@@ -124,15 +125,17 @@ public class MainWindow extends JFrame implements Observer, IConstants {
     }
     @Override
     public void update(Observable pObservable, Object pObjectPoint) {
+        System.out.println("Update");
         Point point = (Point) pObjectPoint;
-        JLabel label = new JLabel();
+        JLabel label = new JLabel("");
+        label.setOpaque(true);
         label.setBackground(Color.BLACK);
-        label.setBounds((int)point.getX()-15,(int)point.getY()-15,(int)point.getX()+15,(int)point.getY()+15);
+        label.setBounds((int)point.getX()-NODE_RADIUS,(int)point.getY()-NODE_RADIUS,NODE_RADIUS,NODE_RADIUS);
         label.addMouseListener(inNodeListener);
         hashtable.put(label,point);
-        add(label);
+        mainPanel.add(label);
         label.setVisible(true);
-        revalidate();
+        mainPanel.repaint();
     }
 
     public static void main(String[] args) {
