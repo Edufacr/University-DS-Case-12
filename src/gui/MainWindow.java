@@ -89,7 +89,6 @@ public class MainWindow extends JFrame implements Observer, IConstants {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(!done){
-                    System.out.println("AddNode");
                     int x = e.getX();
                     int y = e.getY();
                     manager.addPoint(x,y);
@@ -103,7 +102,6 @@ public class MainWindow extends JFrame implements Observer, IConstants {
                 	manager.setLast(hashtable.get((JLabel)e.getSource()));
                 }
                 else{
-                    System.out.println("AddEdge");
                     Point point = hashtable.get((JLabel)e.getSource());
                     manager.addEdge(point);
                     paintLine(point,new Point(0,0),Color.BLUE);
@@ -120,7 +118,6 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         this.bGenPath = new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		path = manager.getPath();
-        		System.out.println(path);
         		(new Thread(new Runnable(){
      			   public void run(){
      			    	try {
@@ -148,7 +145,6 @@ public class MainWindow extends JFrame implements Observer, IConstants {
     
     @Override
     public void update(Observable pObservable, Object pObjectPoint) {
-        System.out.println("Update");
         Point point = (Point) pObjectPoint;
         JLabel label = new JLabel("");
         label.setOpaque(true);
