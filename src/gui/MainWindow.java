@@ -160,7 +160,7 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         hashtable.put(label,point);
         mainPanel.add(label);
         label.setVisible(true);
-        if(endPoint == null){
+        if(endPoint != point){
             paintLine(point,endPoint,Color.BLUE);
         }
         else{
