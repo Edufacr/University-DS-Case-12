@@ -107,6 +107,7 @@ public class MainWindow extends JFrame implements Observer, IConstants {
                     System.out.println("AddEdge");
                     Point point = hashtable.get((JLabel)e.getSource());
                     manager.addEdge(point);
+                    PaintLine(point,new Point(0,0),Color.BLUE);
                 }
 
             }
@@ -127,9 +128,9 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         manager = new MapManager();
         manager.addObserver(this);
     }
-    private void PaintLines(Point pStart, Point pEnd,Color pColor){
-        mainPanel.getGraphics().setColor(pColor);
-        mainPanel.getGraphics().drawLine((int)pStart.getX(),(int)pStart.getY(),(int)pEnd.getX(),(int)pEnd.getY());
+    private void PaintLine(Point pStart, Point pEnd,Color pColor){
+        mainPanel.AddLine(pStart,pEnd,pColor);
+        mainPanel.repaint();
     }
     @Override
     public void update(Observable pObservable, Object pObjectPoint) {
@@ -144,6 +145,7 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         mainPanel.add(label);
         label.setVisible(true);
         mainPanel.repaint();
+
     }
 
     public static void main(String[] args) {
