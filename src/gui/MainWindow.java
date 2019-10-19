@@ -28,9 +28,10 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         //Frame
         super(WINDOW_NAME);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        setPreferredSize(new Dimension(WINDOW_WIDTH,WINDOW_HEIGHT));
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         hashtable = new Hashtable<JLabel,Point>();
+        CreateListeners();
         CreateManager();
         CreateMainPanel();
         //Button
@@ -43,9 +44,9 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         mainPanel = new JPanel();
         mainPanel.setPreferredSize(new Dimension(WINDOW_WIDTH*MAINPANEL_WIDTHRATIO,WINDOW_HEIGHT*MAINPANEL_HEIGHTRATIO));
         //Aqui carga la foto
-        loadImage();
-        JLabel imageLabel = new JLabel(new ImageIcon(this.image.getScaledInstance(WINDOW_WIDTH, WINDOW_HEIGHT, Image.SCALE_DEFAULT)));
-        mainPanel.add(imageLabel);
+        //loadImage();
+        //JLabel imageLabel = new JLabel(new ImageIcon(this.image.getScaledInstance(WINDOW_WIDTH, WINDOW_HEIGHT, Image.SCALE_DEFAULT)));
+        //mainPanel.add(imageLabel);
         mainPanel.addMouseListener(panelListener);
     }
     
@@ -63,14 +64,16 @@ public class MainWindow extends JFrame implements Observer, IConstants {
             public void mouseClicked(MouseEvent e) {
                 int x = e.getX();
                 int y = e.getY();
-                //manager.addPoint(x,y);
+                manager.addPoint(x,y);
             }
         };
         inNodeListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                System.out.print("Estripo");
                 Point point = hashtable.get((JLabel)e.getSource());
-                //manager.addEdge(point);
+                manager.addEdge(point);
+                System.out.print("Estripo");
             }
         };
     }
@@ -82,10 +85,13 @@ public class MainWindow extends JFrame implements Observer, IConstants {
     public void update(Observable pObservable, Object pObjectPoint) {
         Point point = (Point) pObjectPoint;
         JLabel label = new JLabel();
+        label.setBackground(Color.BLACK);
         label.setBounds((int)point.getX()-15,(int)point.getY()-15,(int)point.getX()+15,(int)point.getY()+15);
         label.addMouseListener(inNodeListener);
         hashtable.put(label,point);
         add(label);
+        label.setVisible(true);
+        revalidate();
     }
 
     public static void main(String[] args) {
