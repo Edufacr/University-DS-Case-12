@@ -196,3 +196,7 @@ fabric.properties
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
+
+*.xml
+
+University-DS-Case-12.iml
