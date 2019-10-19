@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -111,6 +112,17 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         this.bFinished = new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		done = true;
+        		
+        		Point home = manager.getHome();
+        		JLabel label = new JLabel("");
+        		label.setOpaque(true);
+                label.setBackground(Color.red);
+                label.setBounds((int)home.getX()-NODE_RADIUS,(int)home.getY()-NODE_RADIUS,NODE_RADIUS,NODE_RADIUS);
+                label.setVisible(true);
+                mainPanel.add(label);     
+                mainPanel.repaint();
+                
+                
 			};
         };
         
