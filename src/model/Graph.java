@@ -21,8 +21,15 @@ public class Graph<T> {
 		}
 	}
 	
-	public GraphNode<T> getNode(T pKey){
-		return this.directory.get(pKey);
+	public void clearVisits() {
+		for (GraphNode<T> node : this.nodes) {
+			node.resetVisit();
+		}
+	}
+	
+	public void clear() {
+		this.nodes.clear();
+		this.directory.clear();
 	}
 	
 	public void addEdge(T pValue1, T pValue2) {
