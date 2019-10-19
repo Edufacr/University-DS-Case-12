@@ -108,9 +108,10 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         		done = true;
 			};
         };
+        
         this.bGenPath = new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-//        		this.path = manager.getPath();
+//        		path = manager.getPath();
 //        		this.paintPath();
 			};
         };
