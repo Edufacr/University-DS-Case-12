@@ -72,7 +72,6 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         
         this.buttonPanel = new JPanel();
         this.buttonPanel.setSize(20, 10);
-        //this.buttonPanel.
         this.buttonPanel.add(finished);
         this.buttonPanel.add(path);
     }
@@ -107,7 +106,7 @@ public class MainWindow extends JFrame implements Observer, IConstants {
                     System.out.println("AddEdge");
                     Point point = hashtable.get((JLabel)e.getSource());
                     manager.addEdge(point);
-                    PaintLine(point,new Point(0,0),Color.BLUE);
+                    paintLine(point,new Point(0,0),Color.BLUE);
                 }
 
             }
@@ -126,7 +125,7 @@ public class MainWindow extends JFrame implements Observer, IConstants {
      			   public void run(){
      			    	try {
      			    		for (int i = 0; i < path.size()-1; i++) {
-     		        			//paintLine(path.get(i); path.get(i+1); i++, COLOR.RED);
+     			    			paintLine(path.get(i), path.get(i+1), Color.red);
      		        		}
      			    		Thread.sleep(SLEEP_TIME);
      			    	}catch (Exception ex) {
@@ -142,7 +141,7 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         manager = new MapManager();
         manager.addObserver(this);
     }
-    private void PaintLine(Point pStart, Point pEnd,Color pColor){
+    private void paintLine(Point pStart, Point pEnd,Color pColor){
         mainPanel.AddLine(pStart,pEnd,pColor);
         mainPanel.repaint();
     }
