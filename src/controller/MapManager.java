@@ -38,10 +38,9 @@ public class MapManager extends Observable{
 		this.graph.addEdge(pPoint, this.last);
 	}
 	
-	public ArrayList<Point> getPath(Point pSource, Point pDestination){
+	public void getPath(Point pSource, Point pDestination){
 		setChanged();
-		notifyObservers();
-		return this.graph.getPath(pSource, pDestination);
+		notifyObservers(this.graph.getPath(pSource, pDestination));
 	} 
 	
 }
