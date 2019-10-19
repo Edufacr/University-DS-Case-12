@@ -119,19 +119,34 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         
         this.bGenPath = new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-//        		path = manager.getPath();
-//        		this.paintPath();
+        		path = manager.getPath();
+        		System.out.println(path);
+        		(new Thread(new Runnable(){
+     			   public void run(){
+     			    	try {
+     			    		for (int i = 0; i < path.size()-1; i++) {
+     		        			//paintLine(path.get(i); path.get(i+1); i++, COLOR.RED);
+     		        		}
+     			    		Thread.sleep(SLEEP_TIME);
+     			    	}catch (Exception ex) {
+     						System.out.println("F");
+     					}	
+     			   }
+     			})).start();
 			};
         };
     }
+    
     private void CreateManager(){
         manager = new MapManager();
         manager.addObserver(this);
     }
+    
     private void PaintLines(Point pStart, Point pEnd,Color pColor){
         mainPanel.getGraphics().setColor(pColor);
         mainPanel.getGraphics().drawLine((int)pStart.getX(),(int)pStart.getY(),(int)pEnd.getX(),(int)pEnd.getY());
     }
+    
     @Override
     public void update(Observable pObservable, Object pObjectPoint) {
         System.out.println("Update");
