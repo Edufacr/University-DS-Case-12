@@ -21,8 +21,15 @@ public class Graph<T> {
 		}
 	}
 	
-	public GraphNode<T> getNode(T pKey){
-		return this.directory.get(pKey);
+	public void clearVisits() {
+		for (GraphNode<T> node : this.nodes) {
+			node.resetVisit();
+		}
+	}
+	
+	public void clear() {
+		this.nodes.clear();
+		this.directory.clear();
 	}
 	
 	public void addEdge(T pValue1, T pValue2) {
@@ -38,7 +45,7 @@ public class Graph<T> {
 		if (this.directory.containsKey(pValue1) && this.directory.containsKey(pValue2)) {
 			GraphNode<T> node1 = directory.get(pValue1);
 			GraphNode<T> node2 = directory.get(pValue2);
-			ArrayList<T> path = new ArrayList<T>();
+			ArrayList<T> invPath = new ArrayList<T>();
 			ArrayDeque<GraphNode<T>> queue = new ArrayDeque<GraphNode<T>>();
 			
 			queue.addLast(node1);
@@ -58,8 +65,12 @@ public class Graph<T> {
 					}
 				}
 			}
-			
-			return generatePath(path, node2);
+			invPath = generatePath(invPath, node2);
+			ArrayList<T> path = new ArrayList<T>();
+			for (int i = invPath.size() - 1; i >= 0; i--) {
+				path.add(invPath.get(i));
+			}
+			return path;
 			
 		}
 		return null;
