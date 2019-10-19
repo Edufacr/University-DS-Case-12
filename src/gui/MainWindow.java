@@ -146,6 +146,9 @@ public class MainWindow extends JFrame implements Observer, IConstants {
     @Override
     public void update(Observable pObservable, Object pObjectPoint) {
         Point point = (Point) pObjectPoint;
+        ArrayList<Point> list = (ArrayList<Point>) pObjectPoint;
+        Point point = list.get(0);
+        Point endPoint = list.get(1);
         JLabel label = new JLabel("");
         label.setOpaque(true);
         label.setBackground(Color.BLACK);
@@ -154,7 +157,12 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         hashtable.put(label,point);
         mainPanel.add(label);
         label.setVisible(true);
-        mainPanel.repaint();
+        if(endPoint == null){
+            paintLine(point,endPoint,Color.BLUE);
+        }
+        else{
+            mainPanel.repaint();
+        }
 
     }
 

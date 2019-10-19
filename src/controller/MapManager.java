@@ -17,7 +17,7 @@ public class MapManager extends Observable{
 	public void setLast(Point pPoint) {
 		this.last = pPoint;
 	}
-	
+
 	public Point addPoint(int pX, int pY) {
 		Point point = new Point(pX, pY);
 		this.graph.addNode(point);
@@ -29,14 +29,18 @@ public class MapManager extends Observable{
 		}
 		
 		this.last = point;
+		ArrayList<Point> list = new ArrayList<Point>();
+		list.add(point);
+		list.add(last);
 		setChanged();
-		notifyObservers(point);
+		notifyObservers(list);
 		return point;
 	}
 	
-	public void addEdge(Point pPoint) {
+	public Point addEdge(Point pPoint) {
 		this.graph.addEdge(this.last, pPoint);
 		this.graph.addEdge(pPoint, this.last);
+		return this.last;
 		
 	}
 	
@@ -45,5 +49,9 @@ public class MapManager extends Observable{
 		ArrayList<Point> path = this.graph.getPath(source, last);
 		return path;
 	} 
+	
+	public Point getHome() {
+		return graph.getHome();
+	}
 	
 }
