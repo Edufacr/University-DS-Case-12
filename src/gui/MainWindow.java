@@ -3,12 +3,16 @@ package gui;
 import controller.MapManager;
 import utilities.IConstants;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Hashtable;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -19,9 +23,11 @@ public class MainWindow extends JFrame implements Observer, IConstants {
     private Hashtable<JLabel,Point> hashtable;
     private MouseAdapter panelListener;
     private MouseAdapter inNodeListener;
-    private MainWindow(){
+    private BufferedImage image;
+    public MainWindow(){
         //Frame
         super(WINDOW_NAME);
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setPreferredSize(new Dimension(WINDOW_WIDTH,WINDOW_HEIGHT));
 
         hashtable = new Hashtable<JLabel,Point>();
@@ -37,8 +43,20 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         mainPanel = new JPanel();
         mainPanel.setPreferredSize(new Dimension(WINDOW_WIDTH*MAINPANEL_WIDTHRATIO,WINDOW_HEIGHT*MAINPANEL_HEIGHTRATIO));
         //Aqui carga la foto
+        loadImage();
+        JLabel imageLabel = new JLabel(new ImageIcon(this.image.getScaledInstance(WINDOW_WIDTH, WINDOW_HEIGHT, Image.SCALE_DEFAULT)));
+        mainPanel.add(imageLabel);
         mainPanel.addMouseListener(panelListener);
     }
+    
+    private void loadImage() {
+    	try {                
+            this.image = ImageIO.read(new File(IMAGE_PATH));
+         } catch (IOException ex) {
+              this.image = null;
+         }
+    }
+    
     private void CreateListeners(){
         panelListener = new MouseAdapter() {
             @Override
