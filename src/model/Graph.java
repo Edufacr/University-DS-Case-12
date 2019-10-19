@@ -3,7 +3,6 @@ package model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ArrayDeque;
-import java.util.Stack;
 
 public class Graph<T> {
 	private ArrayList<GraphNode<T>> nodes;
