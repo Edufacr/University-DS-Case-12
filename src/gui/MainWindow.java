@@ -145,7 +145,6 @@ public class MainWindow extends JFrame implements Observer, IConstants {
     
     @Override
     public void update(Observable pObservable, Object pObjectPoint) {
-        Point point = (Point) pObjectPoint;
         ArrayList<Point> list = (ArrayList<Point>) pObjectPoint;
         Point point = list.get(0);
         Point endPoint = list.get(1);
