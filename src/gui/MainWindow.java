@@ -103,8 +103,7 @@ public class MainWindow extends JFrame implements Observer, IConstants {
                 }
                 else{
                     Point point = hashtable.get((JLabel)e.getSource());
-                    manager.addEdge(point);
-                    paintLine(point,new Point(0,0),Color.BLUE);
+                    paintLine(point,manager.addEdge(point),Color.BLUE);
                 }
 
             }
