@@ -127,6 +127,10 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         manager = new MapManager();
         manager.addObserver(this);
     }
+    private void PaintLines(Point pStart, Point pEnd,Color pColor){
+        mainPanel.getGraphics().setColor(pColor);
+        mainPanel.getGraphics().drawLine((int)pStart.getX(),(int)pStart.getY(),(int)pEnd.getX(),(int)pEnd.getY());
+    }
     @Override
     public void update(Observable pObservable, Object pObjectPoint) {
         System.out.println("Update");
