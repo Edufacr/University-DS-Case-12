@@ -87,18 +87,26 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         panelListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("AddNode");
-                int x = e.getX();
-                int y = e.getY();
-                manager.addPoint(x,y);
+                if(!done){
+                    System.out.println("AddNode");
+                    int x = e.getX();
+                    int y = e.getY();
+                    manager.addPoint(x,y);
+                }
             }
         };
         inNodeListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("AddEdge");
-                Point point = hashtable.get((JLabel)e.getSource());
-                manager.addEdge(point);
+                if(done){
+
+                }
+                else{
+                    System.out.println("AddEdge");
+                    Point point = hashtable.get((JLabel)e.getSource());
+                    manager.addEdge(point);
+                }
+
             }
         };
         this.bFinished = new ActionListener() {
