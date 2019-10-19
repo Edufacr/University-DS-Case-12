@@ -100,7 +100,7 @@ public class MainWindow extends JFrame implements Observer, IConstants {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(done){
-
+                	manager.setLast(hashtable.get((JLabel)e.getSource()));
                 }
                 else{
                     System.out.println("AddEdge");
