@@ -6,6 +6,8 @@ import utilities.IConstants;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -23,7 +25,9 @@ public class MainWindow extends JFrame implements Observer, IConstants {
     private Hashtable<JLabel,Point> hashtable;
     private MouseAdapter panelListener;
     private MouseAdapter inNodeListener;
+    private ActionListener bFinished;
     private BufferedImage image;
+    
     public MainWindow(){
         //Frame
         super(WINDOW_NAME);
@@ -35,18 +39,20 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         CreateManager();
         CreateMainPanel();
         //Button
-
+        JButton finished = new JButton("Finish Adding");
+        finished.setSize(15,  4);
+        finished.addActionListener(bFinished);
         //add
         add(mainPanel);
+        add(finished);
 
     }
     private void CreateMainPanel(){
         mainPanel = new JPanel();
         mainPanel.setPreferredSize(new Dimension(WINDOW_WIDTH*MAINPANEL_WIDTHRATIO,WINDOW_HEIGHT*MAINPANEL_HEIGHTRATIO));
-        //Aqui carga la foto
-        //loadImage();
-        //JLabel imageLabel = new JLabel(new ImageIcon(this.image.getScaledInstance(WINDOW_WIDTH, WINDOW_HEIGHT, Image.SCALE_DEFAULT)));
-        //mainPanel.add(imageLabel);
+        loadImage();
+        JLabel imageLabel = new JLabel(new ImageIcon(this.image.getScaledInstance(WINDOW_WIDTH, WINDOW_HEIGHT, Image.SCALE_DEFAULT)));
+        mainPanel.add(imageLabel);
         mainPanel.addMouseListener(panelListener);
     }
     
@@ -75,6 +81,17 @@ public class MainWindow extends JFrame implements Observer, IConstants {
                 manager.addEdge(point);
                 System.out.print("Estripo");
             }
+        };
+        this.bFinished = new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		panelListener = null;
+        		inNodeListener = new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        //manager.setLast(hashtable.get((JLabel)e.getSource());
+                    }
+                };
+			};
         };
     }
     private void CreateManager(){
