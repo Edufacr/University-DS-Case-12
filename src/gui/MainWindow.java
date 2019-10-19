@@ -21,11 +21,13 @@ import java.util.Observer;
 public class MainWindow extends JFrame implements Observer, IConstants {
     private boolean done;
     private JPanel mainPanel;
+    private JPanel buttonPanel;
     private MapManager manager;
     private Hashtable<JLabel,Point> hashtable;
     private MouseAdapter panelListener;
     private MouseAdapter inNodeListener;
     private ActionListener bFinished;
+    private ActionListener bGenPath;
     private BufferedImage image;
     
     public MainWindow(){
@@ -38,13 +40,10 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         CreateListeners();
         CreateManager();
         CreateMainPanel();
-        //Button
-        JButton finished = new JButton("Finish Adding");
-        finished.setSize(15,  4);
-        finished.addActionListener(bFinished);
-        //add
+        CreateButtonPanel();
+        
         add(mainPanel);
-        add(finished);
+        add(buttonPanel);
 
     }
     private void CreateMainPanel(){
@@ -54,6 +53,23 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         JLabel imageLabel = new JLabel(new ImageIcon(this.image.getScaledInstance(WINDOW_WIDTH, WINDOW_HEIGHT, Image.SCALE_DEFAULT)));
         mainPanel.add(imageLabel);
         mainPanel.addMouseListener(panelListener);
+    }
+    
+    private void CreateButtonPanel() {
+    	//Buttons
+        JButton finished = new JButton("Finish Adding");
+        finished.setSize(15,  4);
+        finished.addActionListener(bFinished);
+        
+        JButton path = new JButton("Get Path");
+        path.setSize(10, 4);
+        path.addActionListener(bGenPath);
+        
+        this.buttonPanel = new JPanel();
+        this.buttonPanel.setSize(20, 10);
+        //this.buttonPanel.
+        this.buttonPanel.add(finished);
+        this.buttonPanel.add(path);
     }
     
     private void loadImage() {
@@ -88,11 +104,12 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         		inNodeListener = new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        //manager.setLast(hashtable.get((JLabel)e.getSource());
+                        manager.setLast(hashtable.get((JLabel)e.getSource()));
                     }
                 };
 			};
         };
+        
     }
     private void CreateManager(){
         manager = new MapManager();
