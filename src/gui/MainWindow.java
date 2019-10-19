@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -90,7 +91,6 @@ public class MainWindow extends JFrame implements Observer, IConstants {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(!done){
-                    System.out.println("AddNode");
                     int x = e.getX();
                     int y = e.getY();
                     manager.addPoint(x,y);
@@ -104,7 +104,6 @@ public class MainWindow extends JFrame implements Observer, IConstants {
 
                 }
                 else{
-                    System.out.println("AddEdge");
                     Point point = hashtable.get((JLabel)e.getSource());
                     manager.addEdge(point);
                     PaintLine(point,new Point(0,0),Color.BLUE);
@@ -115,6 +114,17 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         this.bFinished = new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		done = true;
+        		
+        		Point home = manager.getHome();
+        		JLabel label = new JLabel("");
+        		label.setOpaque(true);
+                label.setBackground(Color.red);
+                label.setBounds((int)home.getX()-NODE_RADIUS,(int)home.getY()-NODE_RADIUS,NODE_RADIUS,NODE_RADIUS);
+                label.setVisible(true);
+                mainPanel.add(label);     
+                mainPanel.repaint();
+                
+                
 			};
         };
         
@@ -149,7 +159,6 @@ public class MainWindow extends JFrame implements Observer, IConstants {
     
     @Override
     public void update(Observable pObservable, Object pObjectPoint) {
-        System.out.println("Update");
         Point point = (Point) pObjectPoint;
         JLabel label = new JLabel("");
         label.setOpaque(true);
