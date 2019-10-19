@@ -6,10 +6,12 @@ public class GraphNode<T> {
 	private T contents;
 	private boolean visited;
 	private ArrayList<GraphNode<T>> adjacentNodes;
+	private GraphNode<T> last;
 	
 	public GraphNode(T pContents) {
 		this.contents = pContents;
 		this.adjacentNodes = new ArrayList<GraphNode<T>>();
+		this.last = null;
 	}
 
 	public T getContents() {
@@ -17,7 +19,7 @@ public class GraphNode<T> {
 	}
 
 	public ArrayList<GraphNode<T>> getAdjacentNodes() {
-		return adjacentNodes;
+		return this.adjacentNodes;
 	}
 	
 	public boolean isVisited() {
@@ -30,6 +32,14 @@ public class GraphNode<T> {
 	
 	public void resetVisit() {
 		this.visited = false;
+	}
+	
+	public GraphNode<T> getLast(){
+		return this.last;
+	}
+
+	public void setLast(GraphNode<T> pLast) {
+		this.last = pLast;
 	}
 	
 	public GraphNode<T> getAdjacent(T pValue) {
