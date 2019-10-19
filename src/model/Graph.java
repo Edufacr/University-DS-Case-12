@@ -22,6 +22,10 @@ public class Graph<T> {
 		}
 	}
 	
+	public GraphNode<T> getNode(T pKey){
+		return this.directory.get(pKey);
+	}
+	
 	public void addEdge(T pValue1, T pValue2) {
 		if (this.directory.containsKey(pValue1) && this.directory.containsKey(pValue2)) {
 			GraphNode<T> node1 = directory.get(pValue1);
@@ -31,17 +35,18 @@ public class Graph<T> {
 		}
 	}
 	
-	public Stack<T> getPath(T pValue1, T pValue2){
+	public ArrayList<T> getPath(T pValue1, T pValue2){
 		if (this.directory.containsKey(pValue1) && this.directory.containsKey(pValue2)) {
 			GraphNode<T> node1 = directory.get(pValue1);
 			GraphNode<T> node2 = directory.get(pValue2);
-			Stack<T> path = new Stack<T>();
+			ArrayList<T> path = new ArrayList<T>();
 			ArrayDeque<GraphNode<T>> queue = new ArrayDeque<GraphNode<T>>();
 			
 			queue.addLast(node1);
 			
 			while(!queue.isEmpty()) {
 				GraphNode<T> current = queue.removeFirst();
+				current.visit();
 				for (GraphNode<T> adjNode : current.getAdjacentNodes()) {
 					if (!adjNode.isVisited()) {
 						adjNode.visit();
@@ -55,16 +60,32 @@ public class Graph<T> {
 				}
 			}
 			
-			GraphNode<T> current = node2;
-			do {
-				path.push(current.getContents());
-				current = current.getLast();
-			} while(current.getLast() != null);
-			
-			return path;
+			return generatePath(path, node2);
 			
 		}
 		return null;
+	}
+	
+	private ArrayList<T> generatePath(ArrayList<T> pArray, GraphNode<T> pNode){
+		if (pNode == null) {
+			return pArray;
+		} else {
+			pArray.add(pNode.getContents());
+			return generatePath(pArray, pNode.getLast());
+		}
+	}
+	
+	
+	public void print() {
+		for (GraphNode<T> node : this.nodes) {
+			System.out.println("Nodo: " + node.getContents());
+			System.out.print("Adyacentes: ");
+			for (GraphNode<T> adjNode : node.getAdjacentNodes()) {
+				System.out.print("" + adjNode.getContents() + " ");
+			}
+			System.out.println();
+			System.out.println();
+		}
 	}
 	
 	
@@ -81,10 +102,9 @@ public class Graph<T> {
 		g.addEdge("B", "C");
 		g.addEdge("B", "E");
 		
-		Stack<String> path = g.getPath("A", "D");
-		
-		for (int i = 0; i < path.size(); i++) {
-			System.out.println(path.pop());
-		}
+		ArrayList<String> path = g.getPath("A", "E");
+	
+		System.out.println(path);
+
 	}
 }
