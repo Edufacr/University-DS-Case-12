@@ -25,7 +25,8 @@ public class MainWindow extends JFrame implements Observer, IConstants {
     private ImagePanel mainPanel;
     private JPanel buttonPanel;
     private MapManager manager;
-    private Hashtable<JLabel,Point> hashtable;
+    private Hashtable<JLabel,Point> jLabelPointHashtable;
+    private Hashtable<Point,JLabel> pointJLabelHashtable;
     private ArrayList<Point> path;
     private MouseAdapter panelListener;
     private MouseAdapter inNodeListener;
@@ -39,7 +40,8 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        hashtable = new Hashtable<JLabel,Point>();
+        jLabelPointHashtable = new Hashtable<JLabel,Point>();
+        pointJLabelHashtable = new Hashtable<Point,JLabel>();
         CreateListeners();
         CreateManager();
         CreateMainPanel();
@@ -100,10 +102,12 @@ public class MainWindow extends JFrame implements Observer, IConstants {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(done){
-                	manager.setLast(hashtable.get((JLabel)e.getSource()));
+                    mainPanel.ChangeLabelColor(pointJLabelHashtable.get(manager.getLast()),Color.BLACK);
+                	manager.setLast(jLabelPointHashtable.get((JLabel)e.getSource()));
+                    mainPanel.ChangeLabelColor((JLabel)e.getSource(),Color.green);
                 }
                 else{
-                    Point point = hashtable.get((JLabel)e.getSource());
+                    Point point = jLabelPointHashtable.get((JLabel)e.getSource());
                     paintLine(point,manager.addEdge(point),Color.BLUE);
                 }
 
@@ -112,17 +116,7 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         this.bFinished = new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		done = true;
-        		
-        		Point home = manager.getHome();
-        		JLabel label = new JLabel("");
-        		label.setOpaque(true);
-                label.setBackground(Color.red);
-                label.setBounds((int)home.getX()-NODE_RADIUS,(int)home.getY()-NODE_RADIUS,NODE_RADIUS,NODE_RADIUS);
-                label.setVisible(true);
-                mainPanel.add(label);     
-                mainPanel.repaint();
-                
-                
+        		mainPanel.ChangeLabelColor(pointJLabelHashtable.get(manager.getHome()),Color.RED);
 			};
         };
         
@@ -164,7 +158,8 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         label.setBackground(Color.BLACK);
         label.setBounds((int)point.getX()-NODE_RADIUS,(int)point.getY()-NODE_RADIUS,NODE_RADIUS,NODE_RADIUS);
         label.addMouseListener(inNodeListener);
-        hashtable.put(label,point);
+        jLabelPointHashtable.put(label,point);
+        pointJLabelHashtable.put(point,label);
         mainPanel.add(label);
         label.setVisible(true);
         if(endPoint != point){

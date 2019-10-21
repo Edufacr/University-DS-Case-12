@@ -17,6 +17,7 @@ public class MapManager extends Observable{
 	public void setLast(Point pPoint) {
 		this.last = pPoint;
 	}
+	public Point getLast(){return last;}
 
 	public Point addPoint(int pX, int pY) {
 		Point point = new Point(pX, pY);
