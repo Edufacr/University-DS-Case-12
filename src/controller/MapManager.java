@@ -22,17 +22,14 @@ public class MapManager extends Observable{
 	public Point addPoint(int pX, int pY) {
 		Point point = new Point(pX, pY);
 		this.graph.addNode(point);
-		
-		
 		if (this.last != null) {
 			this.graph.addEdge(this.last, point);
 			this.graph.addEdge(point, this.last);
 		}
-		
-		this.last = point;
 		ArrayList<Point> list = new ArrayList<Point>();
 		list.add(point);
 		list.add(last);
+		this.last = point;
 		setChanged();
 		notifyObservers(list);
 		return point;

@@ -161,8 +161,7 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         Point point = list.get(0);
         Point endPoint = list.get(1);
         AddLabel(point);
-        if(endPoint != point){
-            System.out.println("Agrega linea");
+        if(endPoint != null){
             addLine(point,endPoint,Color.BLUE);
         }
         else{
