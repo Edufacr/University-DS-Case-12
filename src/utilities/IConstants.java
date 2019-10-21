@@ -9,5 +9,6 @@ public interface IConstants {
     static final String IMAGE_PATH = "src/utilities/ciudad.png";
     static int NODE_RADIUS = 15;
     static final int SLEEP_TIME = 1000;
+    static final int STROKE_WIDTH = 3;
 
 }

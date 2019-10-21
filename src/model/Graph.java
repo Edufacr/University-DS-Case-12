@@ -67,8 +67,8 @@ public class Graph<T> {
 			}
 			invPath = generatePath(invPath, node2);
 			ArrayList<T> path = new ArrayList<T>();
-			for (int i = invPath.size() - 1; i >= 0; i--) {
-				path.add(invPath.get(i));
+			for (int invPathIndex = invPath.size() - 1; invPathIndex >= 0; invPathIndex--) {
+				path.add(invPath.get(invPathIndex));
 			}
 			return path;
 			
