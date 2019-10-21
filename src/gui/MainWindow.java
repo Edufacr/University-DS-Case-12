@@ -142,7 +142,7 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         JLabel label = new JLabel("");
         label.setOpaque(true);
         label.setBackground(Color.BLACK);
-        label.setBounds((int)pPoint.getX()-NODE_RADIUS,(int)pPoint.getY()-NODE_RADIUS,NODE_RADIUS,NODE_RADIUS);
+        label.setBounds((int)pPoint.getX()-(NODE_RADIUS/2),(int)pPoint.getY()-(NODE_RADIUS/2),NODE_RADIUS,NODE_RADIUS);
         label.addMouseListener(inNodeListener);
         jLabelPointHashtable.put(label,pPoint);
         pointJLabelHashtable.put(pPoint,label);
