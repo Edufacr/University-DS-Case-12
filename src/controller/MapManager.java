@@ -43,6 +43,7 @@ public class MapManager extends Observable{
 	}
 	
 	public ArrayList<Point> getPath(){
+		this.graph.clearVisits();
 		Point source = this.graph.getHome();
 		ArrayList<Point> path = this.graph.getPath(source, last);
 		return path;
