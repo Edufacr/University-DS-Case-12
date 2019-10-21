@@ -127,8 +127,9 @@ public class MainWindow extends JFrame implements Observer, IConstants {
      			    	try {
      			    		for (int i = 0; i < path.size()-1; i++) {
      			    			mainPanel.paintLine(path.get(i), path.get(i+1), Color.red,mainPanel.getGraphics());
+     			    			Thread.sleep(SLEEP_TIME);
      		        		}
-     			    		Thread.sleep(SLEEP_TIME);
+     			    		
      			    	}catch (Exception ex) {
      						System.out.println("F");
      					}	
