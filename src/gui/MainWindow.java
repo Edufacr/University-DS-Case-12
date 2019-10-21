@@ -57,7 +57,6 @@ public class MainWindow extends JFrame implements Observer, IConstants {
         mainPanel = new ImagePanel();
         mainPanel.setLayout(null);
         mainPanel.setPreferredSize(new Dimension(WINDOW_WIDTH*MAINPANEL_WIDTHRATIO,WINDOW_HEIGHT*MAINPANEL_HEIGHTRATIO));
-
         loadImage();
         mainPanel.setImage(image.getScaledInstance(WINDOW_WIDTH, WINDOW_HEIGHT, Image.SCALE_DEFAULT));
         mainPanel.addMouseListener(panelListener);
@@ -108,7 +107,7 @@ public class MainWindow extends JFrame implements Observer, IConstants {
                 }
                 else{
                     Point point = jLabelPointHashtable.get((JLabel)e.getSource());
-                    paintLine(point,manager.addEdge(point),Color.BLUE);
+                    addLine(point,manager.addEdge(point),Color.BLUE);
                 }
 
             }
@@ -127,7 +126,7 @@ public class MainWindow extends JFrame implements Observer, IConstants {
      			   public void run(){
      			    	try {
      			    		for (int i = 0; i < path.size()-1; i++) {
-     			    			paintLine(path.get(i), path.get(i+1), Color.red);
+     			    			mainPanel.paintLine(path.get(i), path.get(i+1), Color.red,mainPanel.getGraphics());
      		        		}
      			    		Thread.sleep(SLEEP_TIME);
      			    	}catch (Exception ex) {
@@ -138,32 +137,33 @@ public class MainWindow extends JFrame implements Observer, IConstants {
 			};
         };
     }
-    
+    private void AddLabel(Point pPoint){
+        JLabel label = new JLabel("");
+        label.setOpaque(true);
+        label.setBackground(Color.BLACK);
+        label.setBounds((int)pPoint.getX()-NODE_RADIUS,(int)pPoint.getY()-NODE_RADIUS,NODE_RADIUS,NODE_RADIUS);
+        label.addMouseListener(inNodeListener);
+        jLabelPointHashtable.put(label,pPoint);
+        pointJLabelHashtable.put(pPoint,label);
+        mainPanel.add(label);
+    }
     private void CreateManager(){
         manager = new MapManager();
         manager.addObserver(this);
     }
-    private void paintLine(Point pStart, Point pEnd,Color pColor){
+    private void addLine(Point pStart, Point pEnd,Color pColor){
         mainPanel.AddLine(pStart,pEnd,pColor);
         mainPanel.repaint();
     }
-    
     @Override
     public void update(Observable pObservable, Object pObjectPoint) {
         ArrayList<Point> list = (ArrayList<Point>) pObjectPoint;
         Point point = list.get(0);
         Point endPoint = list.get(1);
-        JLabel label = new JLabel("");
-        label.setOpaque(true);
-        label.setBackground(Color.BLACK);
-        label.setBounds((int)point.getX()-NODE_RADIUS,(int)point.getY()-NODE_RADIUS,NODE_RADIUS,NODE_RADIUS);
-        label.addMouseListener(inNodeListener);
-        jLabelPointHashtable.put(label,point);
-        pointJLabelHashtable.put(point,label);
-        mainPanel.add(label);
-        label.setVisible(true);
+        AddLabel(point);
         if(endPoint != point){
-            paintLine(point,endPoint,Color.BLUE);
+            System.out.println("Agrega linea");
+            addLine(point,endPoint,Color.BLUE);
         }
         else{
             mainPanel.repaint();

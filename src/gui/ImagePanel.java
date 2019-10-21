@@ -22,9 +22,12 @@ public class ImagePanel extends JPanel {
     }
     private void PaintLines(Graphics pGraphics){
         for (Line line:lines ){
-            pGraphics.setColor(line.getColor());
-            pGraphics.drawLine((int)line.getStart().getX(),(int)line.getStart().getY(),(int)line.getEnd().getX(),(int)line.getEnd().getY());
+            paintLine(line.getStart(),line.getEnd(),line.getColor(),pGraphics);
         }
+    }
+    public void paintLine(Point pStart, Point pEnd,Color pColor,Graphics pGraphics){
+        pGraphics.setColor(pColor);
+        pGraphics.drawLine((int)pStart.getX(),(int)pStart.getY(),(int)pEnd.getX(),(int)pEnd.getY());
     }
     public void AddLine(Point pStart, Point pEnd,Color pColor){
         lines.add(new Line(pStart,pEnd,pColor));
