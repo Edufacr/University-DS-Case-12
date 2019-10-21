@@ -8,7 +8,6 @@ import model.*;
 public class MapManager extends Observable{
 	private Graph<Point> graph;
 	private Point last;
-	private Point actualLast;
 	//private GUI gui;
 	
 	public MapManager() {
@@ -24,11 +23,8 @@ public class MapManager extends Observable{
 		Point point = new Point(pX, pY);
 		this.graph.addNode(point);
 		if (this.last != null) {
-			this.actualLast = this.actualLast;
-			this.last = point;
 			this.graph.addEdge(this.last, point);
 			this.graph.addEdge(point, this.last);
-			return this.actualLast;
 		}
 		ArrayList<Point> list = new ArrayList<Point>();
 		list.add(point);
