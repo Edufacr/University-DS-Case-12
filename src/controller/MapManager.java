@@ -8,7 +8,6 @@ import model.*;
 public class MapManager extends Observable{
 	private Graph<Point> graph;
 	private Point last;
-	private Point actualLast;
 	//private GUI gui;
 	
 	public MapManager() {
@@ -18,23 +17,21 @@ public class MapManager extends Observable{
 	public void setLast(Point pPoint) {
 		this.last = pPoint;
 	}
-	
+	public Point getLast(){return last;}
+
 	public Point addPoint(int pX, int pY) {
 		Point point = new Point(pX, pY);
 		this.graph.addNode(point);
-		
-		
 		if (this.last != null) {
-			this.actualLast = this.actualLast;
-			this.last = point;
 			this.graph.addEdge(this.last, point);
 			this.graph.addEdge(point, this.last);
-			return this.actualLast;
 		}
-		
+		ArrayList<Point> list = new ArrayList<Point>();
+		list.add(point);
+		list.add(last);
 		this.last = point;
 		setChanged();
-		notifyObservers(point);
+		notifyObservers(list);
 		return point;
 	}
 	
@@ -46,6 +43,7 @@ public class MapManager extends Observable{
 	}
 	
 	public ArrayList<Point> getPath(){
+		this.graph.clearVisits();
 		Point source = this.graph.getHome();
 		ArrayList<Point> path = this.graph.getPath(source, last);
 		return path;

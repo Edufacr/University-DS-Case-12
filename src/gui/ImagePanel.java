@@ -20,14 +20,21 @@ public class ImagePanel extends JPanel {
         g.drawImage(image,0,0,null);
         PaintLines(g);
     }
-    private void PaintLines(Graphics g){
+    private void PaintLines(Graphics pGraphics){
         for (Line line:lines ){
-            g.setColor(line.getColor());
-            g.drawLine((int)line.getStart().getX(),(int)line.getStart().getY(),(int)line.getEnd().getX(),(int)line.getEnd().getY());
+            paintLine(line.getStart(),line.getEnd(),line.getColor(),pGraphics);
         }
+    }
+    public void paintLine(Point pStart, Point pEnd,Color pColor,Graphics pGraphics){
+        pGraphics.setColor(pColor);
+        pGraphics.drawLine((int)pStart.getX(),(int)pStart.getY(),(int)pEnd.getX(),(int)pEnd.getY());
     }
     public void AddLine(Point pStart, Point pEnd,Color pColor){
         lines.add(new Line(pStart,pEnd,pColor));
+    }
+    public  void ChangeLabelColor(JLabel pLabel,Color pColor){
+        pLabel.setBackground(pColor);
+        repaint();
     }
 
 }
